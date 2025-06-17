@@ -1,6 +1,6 @@
 "use client";
 
-import LoginForm from "@/components/ui/LoginForm";
+import LoginForm from "@/components/login-form";
 import { Theme } from "@/lib/constants/theme";
 
 export default function LoginPage() {
