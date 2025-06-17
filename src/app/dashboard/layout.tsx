@@ -1,31 +1,49 @@
-// app/dashboard/layout.tsx
 "use client"
 
-import { useState } from "react"
-import { Sidebar } from "@/components/sidebar"
-import { Topbar } from "@/components/topbar"
+import { useState, useEffect } from "react"
+import { Sidebar } from "@/components/dashboard/sidebar/sidebar"
+import { Topbar } from "@/components/dashboard/sidebar/topbar"
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [collapsed, setCollapsed] = useState(false)
-  const [sidebarVisible, setSidebarVisible] = useState(true)
+  const [sidebarVisible, setSidebarVisible] = useState(false)
 
-  const toggleSidebar = () => setSidebarVisible(!sidebarVisible)
+  // Tutup sidebar saat tekan ESC (mobile UX)
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSidebarVisible(false)
+    }
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [])
 
   return (
     <div className="flex">
+      {/* Sidebar */}
       <Sidebar collapsed={collapsed} isVisible={sidebarVisible} />
-      {/* overlay ketika sidebar terbuka di mobile */}
+
+      {/* Overlay hitam saat mobile sidebar aktif */}
       {sidebarVisible && (
         <div
-          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
-          onClick={toggleSidebar}
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={() => setSidebarVisible(false)}
         />
       )}
-      <div className={collapsed ? "ml-20 lg:ml-20 flex-1" : "ml-64 lg:ml-64 flex-1"}>
+
+      {/* Konten utama */}
+      <div
+        className={`flex-1 transition-all duration-300 ${
+          collapsed ? "lg:ml-20" : "lg:ml-64"
+        }`}
+      >
         <Topbar
           collapsed={collapsed}
           setCollapsed={setCollapsed}
-          toggleSidebar={toggleSidebar}
+          toggleSidebar={() => setSidebarVisible(!sidebarVisible)}
         />
         <main className="p-6">{children}</main>
       </div>

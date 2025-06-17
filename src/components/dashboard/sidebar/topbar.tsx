@@ -1,8 +1,8 @@
 "use client"
 
-import { SidebarToggle } from "@/components/sidebar-toggle"
-import { ModeToggle } from "@/components/mode-toggle"
 import { Menu } from "lucide-react"
+import { ModeToggle } from "@/components/dashboard/sidebar/mode-toggle"
+import { SidebarToggle } from "@/components/dashboard/sidebar/sidebar-toggle"
 
 interface TopbarProps {
   collapsed: boolean
@@ -15,25 +15,23 @@ export function Topbar({ collapsed, setCollapsed, toggleSidebar }: TopbarProps) 
     <header className="sticky top-0 z-30 w-full border-b bg-background/80 backdrop-blur-sm">
       <div className="flex h-14 items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          {/* Mobile sidebar toggle */}
-          <button className="lg:hidden p-1 rounded-md hover:bg-accent" onClick={toggleSidebar}>
-  <Menu className="h-5 w-5" />
-</button>
+          {/* Tombol menu untuk mobile */}
+          <button
+            className="lg:hidden p-2 rounded-md hover:bg-accent"
+            onClick={toggleSidebar}
+            aria-label="Buka menu"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
 
-
-          {/* Desktop collapse toggle */}
+          {/* Tombol collapse sidebar untuk desktop */}
           <div className="hidden lg:block">
             <SidebarToggle collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
 
-          <h1 className="text-base lg:text-lg font-semibold tracking-tight">
-            LifeKost
-          </h1>
+          <span className="font-semibold text-lg">LifeKost</span>
         </div>
-
-        <div className="flex items-center space-x-2">
-          <ModeToggle />
-        </div>
+        <ModeToggle />
       </div>
     </header>
   )
