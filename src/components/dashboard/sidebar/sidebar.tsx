@@ -20,7 +20,7 @@ interface SidebarProps {
 
 const navItems = [
   { href: "/dashboard", icon: <Home className="h-5 w-5" />, label: "Dashboard" },
-  { href: "/tugasin", icon: <NotebookPen className="h-5 w-5" />, label: "Tugasin" },
+  { href: "/task", icon: <NotebookPen className="h-5 w-5" />, label: "Tugasin" },
   { href: "/dompet", icon: <Wallet2 className="h-5 w-5" />, label: "DompetKost" },
   { href: "/notifikasi", icon: <Bell className="h-5 w-5" />, label: "Reminder" },
   { href: "/teman", icon: <Users className="h-5 w-5" />, label: "TemanKost" },
@@ -32,12 +32,13 @@ const navItems = [
 export function Sidebar({ collapsed, isVisible }: SidebarProps) {
   return (
     <aside
-      className={cn(
-        "fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out border-r",
-        isVisible ? "translate-x-0" : "-translate-x-full",
-        collapsed ? "w-20" : "w-64",
-        "lg:translate-x-0", // always visible on desktop
-      )}
+     className={cn(
+  "fixed top-0 left-0 z-40 h-screen transition-all duration-300 ease-in-out border-r",
+  isVisible ? "translate-x-0" : "-translate-x-full",
+  collapsed ? "w-[80px]" : "w-[256px]",
+  "lg:translate-x-0"
+)}
+
       style={{
         backgroundColor: Colors.backgroundLight,
         borderColor: Colors.grayBorder,
